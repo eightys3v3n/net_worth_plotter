@@ -27,8 +27,10 @@ Put a JSON output into aliases.json containing {"source account name": "what you
 	balance if there are no reconds that new.
 
 # ToDo
-- Sort statements by import module (named the same for simplicity I think)
-- Implement more statement modules
+- Add a file to allow drawing of verticle lines on graph for important dates. Things like holidays,
+   starting new jobs, ending jobs and so on.
+- Implement more statement modules (BMO credit card, CTFS credit card, XRP value based on given coin amount,
+   silver value based on given amount, large purchases and depreciation)
 - Put statement modules in a modules directory. I haven't done this because I don't know how to properly
    structure folders in a Python project such that they can use functions in the parent folder.
 
