@@ -3,7 +3,9 @@ import datetime
 
 
 class Transaction:
-    def __init__(self, act=None, date=None, desc=None, amt=None, bal_af=None):
+    def __init__(self, csv_row_num=None, act=None, date=None, desc=None, amt=None, bal_af=None):
+        if csv_row_num is not None and not isinstance(csv_row_num, (float, int)):
+            raise ValueError("csv_row_num must be a float or int, not {}".format(type(csv_row_num)))
         if act is not None and not isinstance(act, str):
             raise ValueError("act must be a str object or None, not {}".format(type(act)))
         if date is not None and not isinstance(date, datetime.date):
@@ -15,15 +17,12 @@ class Transaction:
         if bal_af is not None and not isinstance(bal_af, (float, int)):
             raise ValueError("bal_af must be a float/int or None, not {}".format(type(bal_af)))
 
+        self.csv_row_num = csv_row_num
         self.act = act
         self.date = date
         self.desc = desc
         self.amt = amt
         self.bal_af = bal_af
-        self.bal_be = None
-
-        if self.bal_af and self.amt:
-            self.bal_be = self.bal_af + -self.amt
 
 
     def __repr__(self):
@@ -32,13 +31,12 @@ class Transaction:
                 'desc': self.desc,
                 'amt' : self.amt,
                 'bal_af': self.bal_af,
-                'bal_be': self.bal_be,
                 }.__str__()
 
     def __str__(self):
-        return "{{act: '{}',\n date: {},\n desc: '{}',\n amt: {},\n bal_af: {},\n bal_be: {}}}".format(
+        return "{{act: '{}',\n date: {},\n desc: '{}',\n amt: {},\n bal_af: {}}}".format(
                 self.act, self.date.__str__().replace('datetime.date(', '('),
-                self.desc, self.amt, self.bal_af, self.bal_be)
+                self.desc, self.amt, self.bal_af)
 
     def __hash__(self):
         return hash("{}:{}:{}:{}:{}".format(self.act, self.date, self.desc, self.amt, self.bal_af))

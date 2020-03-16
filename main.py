@@ -1,6 +1,7 @@
 import json
 from plot import plot
 import first_calgary
+import tangerine
 from helpers import *
 from pathlib import Path
 
@@ -14,13 +15,14 @@ def main():
 
     accounts = {}
     
-    accounts.update(first_calgary.load())
+    #accounts.update(first_calgary.load())
+    accounts.update(tangerine.load())
 
     if act_aliases is not None:
         accounts = apply_aliases(accounts, act_aliases)
     
     # adds a line for total value of all accounts.
-    create_total(accounts)
+    #create_total(accounts)
     
     plot(accounts)
 

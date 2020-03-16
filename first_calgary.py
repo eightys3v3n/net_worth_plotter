@@ -5,14 +5,15 @@ from helpers import *
 from pathlib import Path
 
 
-def parse_csv_row(row):
-    """Turn a CSV row from a First Calgary statement into Python objects"""
+def parse_csv_row(i, row):
+    """Turn a CSV row from a First Calgary statement into Python objects. Also adds the CSV row number to the end of the row."""
     n_row = []
     for c in row:
         c = c.strip()
         if c == "": c = None
 
         n_row.append(c)
+    n_row.append(i)
 
     try:
         n_row[1] = datetime.datetime.strptime(n_row[1], "%d-%b-%Y").date()
@@ -40,7 +41,8 @@ def parse_trans(row):
     else:
         amt = None
 
-    return Transaction(act=row[0],
+    return Transaction(csv_row_num=row[-1],
+                       act=row[0],
                        date=row[1],
                        desc=row[2],
                        amt=amt,
@@ -80,7 +82,7 @@ def get_statements(path):
 
 
 def load():
-    transactions = get_statements(Path("statements/first_calgary"))
+    transazctions = get_statements(Path("statements/first_calgary"))
     # [Transaction]
 
     accounts = act_wise(transactions)
